@@ -30,7 +30,7 @@ class MarkovMachine {
 	makeText(numWords = 100) {
 		let starter = this.words[Math.floor(Math.random() * this.words.length)];
 		let text = [ starter ];
-		for (let i = 0; i < numWords; i++) {
+		for (let i = 0; i < numWords - 1; i++) {
 			if (this.chains[text[i]] != null) {
 				let len = this.chains[text[i]].length;
 				text.push(this.chains[text[i]][Math.floor(Math.random() * len)]);
@@ -38,7 +38,7 @@ class MarkovMachine {
 				text.push(this.words[Math.floor(Math.random() * this.words.length)]);
 			}
 		}
-		return text.join(' ');
+		return text.length;
 	}
 }
 test = new MarkovMachine(
