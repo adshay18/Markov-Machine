@@ -41,7 +41,3 @@ class MarkovMachine {
 		return text.length;
 	}
 }
-test = new MarkovMachine(
-	'I would not like them\nHere or there.\nI would not like them\nAnywhere.\nI do not like\nGreen eggs and ham.\nI do not like them,\nSam-I-am'
-);
-console.log(test.makeText());
