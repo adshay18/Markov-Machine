@@ -38,6 +38,10 @@ class MarkovMachine {
 				text.push(this.words[Math.floor(Math.random() * this.words.length)]);
 			}
 		}
-		return text.length;
+		console.log(text.join(' '));
 	}
 }
+
+module.exports = {
+	MarkovMachine: MarkovMachine
+};
