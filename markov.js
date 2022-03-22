@@ -1,29 +1,47 @@
 /** Textual markov chain generator */
 
-
 class MarkovMachine {
+	/** build markov machine; read in text.*/
 
-  /** build markov machine; read in text.*/
+	constructor(text) {
+		let words = text.split(/[ \r\n]+/);
+		this.words = words.filter((c) => c !== '');
+		this.makeChains();
+	}
 
-  constructor(text) {
-    let words = text.split(/[ \r\n]+/);
-    this.words = words.filter(c => c !== "");
-    this.makeChains();
-  }
-
-  /** set markov chains:
+	/** set markov chains:
    *
    *  for text of "the cat in the hat", chains will be
    *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
 
-  makeChains() {
-    // TODO
-  }
+	makeChains() {
+		this.chains = {};
+		for (let i = 0; i < this.words.length; i++) {
+			if (!this.chains[this.words[i]]) {
+				this.chains[this.words[i]] = [ this.words[i + 1] ? this.words[i + 1] : null ];
+			} else {
+				this.chains[this.words[i]].push(this.words[i + 1] ? this.words[i + 1] : null);
+			}
+		}
+	}
 
+	/** return random text from chains */
 
-  /** return random text from chains */
-
-  makeText(numWords = 100) {
-    // TODO
-  }
+	makeText(numWords = 100) {
+		let starter = this.words[Math.floor(Math.random() * this.words.length)];
+		let text = [ starter ];
+		for (let i = 0; i < numWords; i++) {
+			if (this.chains[text[i]] != null) {
+				let len = this.chains[text[i]].length;
+				text.push(this.chains[text[i]][Math.floor(Math.random() * len)]);
+			} else {
+				text.push(this.words[Math.floor(Math.random() * this.words.length)]);
+			}
+		}
+		return text.join(' ');
+	}
 }
+test = new MarkovMachine(
+	'I would not like them\nHere or there.\nI would not like them\nAnywhere.\nI do not like\nGreen eggs and ham.\nI do not like them,\nSam-I-am'
+);
+console.log(test.makeText());
